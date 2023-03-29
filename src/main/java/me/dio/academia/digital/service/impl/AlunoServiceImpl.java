@@ -8,9 +8,11 @@ import me.dio.academia.digital.infra.utils.JavaTimeUtils;
 import me.dio.academia.digital.repository.AlunoRepository;
 import me.dio.academia.digital.service.IAlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -32,7 +34,7 @@ public class AlunoServiceImpl implements IAlunoService {
 
   @Override
   public Aluno get(Long id) {
-    return null;
+    return repository.findById(id).get();
   }
 
   @Override
@@ -49,11 +51,16 @@ public class AlunoServiceImpl implements IAlunoService {
 
   @Override
   public Aluno update(Long id, AlunoUpdateForm formUpdate) {
-    return null;
+    AlunoUpdateForm alunoUpdateForm = new AlunoUpdateForm();
+    alunoUpdateForm.setNome(formUpdate.getNome());
+    alunoUpdateForm.setBairro(formUpdate.getBairro());
+    alunoUpdateForm.setDataDeNascimento(formUpdate.getDataDeNascimento());
+    return repository.save(update(id,formUpdate));
   }
 
   @Override
   public void delete(Long id) {
+    repository.deleteById(id);
   }
 
   @Override
